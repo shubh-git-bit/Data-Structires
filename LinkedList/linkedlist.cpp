@@ -60,7 +60,42 @@ void insertionAtEnd(int data) //function to insert nodes at the end
     }
 }
 
+void deleteAtNthPosition(int position)
+{
+    int counter = 1;
+    Node* temp = head;
+    Node* temp1 = head;
+    if(position==1)
+    {
+        head = head->next;
+        temp->next = NULL;
+    }
+    if(position<=0)
+    {
+        cout<<"Invalid Position! cannot delete"<<endl;
+        return;
+    }
+    Node* checker = head;
+    while(checker!=NULL)
+    {
+        counter++;
+        checker = checker->next;
+    }
+    if(position>counter)
+    {
+        cout<<"Invalid position! cannot delete"<<endl;
+        return;
+    }
+    for(int i=0;i<position-2;i++)
+    {
+        temp = temp->next;
+        temp1 = temp1->next;
+    }
+    temp1 = temp->next;
+    temp->next = temp->next->next;
+    temp1->next = NULL;
 
+}
 void insertionAtNthPosition(int data, int position)
 {
      Node* temp1;
@@ -121,7 +156,7 @@ int main()
     char flag;
     do{
         cout<<"********LINKED LIST********"<<endl;
-        cout<<"How do you want to insert?"<<endl<<"1- at the beginning"<<endl<<"2- at the end"<<endl<<"3-insert at nth position"<<endl<<"4- display my list"<<endl;
+        cout<<"How do you want to insert?"<<endl<<"1- at the beginning"<<endl<<"2- at the end"<<endl<<"3-insert at nth position"<<endl<<"4-delete at nth position"<<endl<<"5- display my list"<<endl;
         cin>>method;
         switch (method)
         {
@@ -172,8 +207,15 @@ int main()
                 print();
                 break;
             case 4:
+                cout<<"Enter the position from which you want to delete"<<endl;
+                cin>>position;
+                deleteAtNthPosition(position);
                 print();
                 break;
+            case 5:
+                print();
+                break;
+            
             default:
                 break;
         }
