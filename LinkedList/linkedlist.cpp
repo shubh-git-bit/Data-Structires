@@ -13,6 +13,7 @@ Node* temp1;
 
 
 
+
 void insertionAtBeginning(int data) //function to insert nodes at the beginning (data is passed by the main function)
 {
     Node* temp = new Node(); //temp node pointer points to a new node created
@@ -22,6 +23,7 @@ void insertionAtBeginning(int data) //function to insert nodes at the beginning 
                          which temp is pointing to*/
     {
         head = temp;
+        temp1 = head;
     }
     else /*if the list is already created and you want to enter the node at the beginning then first create a new node pointer temp1
         which points to the same node as head is pointing to
@@ -59,48 +61,126 @@ void insertionAtEnd(int data) //function to insert nodes at the end
 }
 
 
+void insertionAtNthPosition(int data, int position)
+{
+     Node* temp1;
+    int counter=1;
+    Node* temp = new Node();
+    temp->data = data;
+    temp->next = NULL;
+    temp1 = head;
+    if(position<=0)
+    {
+        cout<<"Invalid position! cannot insert"<<endl;
+        return;
+    }
+    if(position==1)
+    {
+        temp->next = temp1;
+        head = temp;
+        return;
+    }
+    Node* checker = head;
+    while(checker!=NULL)
+    {
+        counter++;
+        checker = checker->next;
+    }
+    if(position>counter)
+    {
+        cout<<"Invalid position! cannot insert"<<endl;
+        return;
+    }
+    for(int i=0;i<position-2;i++)
+    {
+        temp1=temp1->next;
+    }
+    temp->next = temp1->next;
+    temp1->next = temp;
+}
+
 void print() //function to print the linked list
 {
     Node* temp = head; //using a temp node pointer to traverse. We don't use head because links will break
+    cout<<"LIST:"<<endl;
     while(temp!=NULL) //while it doesnt point to NULL
     {
-        cout<<"elements are:"<<temp->data<<endl;
+        cout<<temp->data<<"--->";
         temp = temp->next; /*temp points to next node. temp is used to acess the next address and that is set to temp. which means temp
                             is now pointing to next node*/
     }
+    cout<<"NULL"<<endl;
 }
 
 
 
 int main()
 {
-    int n,data,method;
-    cout<<"How do you want to insert 1- at the beginning 2- at the end"<<endl;
-    cin>>method;
-    switch (method)
-    {
-        case 1: 
-        cout<<"How many elements do you want to enter?"<<endl;
-        cin>>n;
-        for(int i=0;i<n;i++)
+    int n,data,method,position;
+    string rank="";
+    char flag;
+    do{
+        cout<<"********LINKED LIST********"<<endl;
+        cout<<"How do you want to insert?"<<endl<<"1- at the beginning"<<endl<<"2- at the end"<<endl<<"3-insert at nth position"<<endl<<"4- display my list"<<endl;
+        cin>>method;
+        switch (method)
         {
-            cin>>data;
-            insertionAtBeginning(data);
+            case 1: 
+                cout<<"How many elements do you want to enter?"<<endl;
+                cin>>n;
+                for(int i=0;i<n;i++)
+                {
+                    if(i==0)
+                        rank = "st";
+                    else if(i==1)
+                        rank = "nd";
+                    else if(i==2)
+                        rank = "rd";
+                    else
+                    rank = "th";
+                    cout<<"Enter the "<<i+1<<rank<<" element to insert"<<endl;
+                    cin>>data;
+                    insertionAtBeginning(data);
+                }
+                print();
+                break;
+            case 2:
+                cout<<"How many elements do you want to enter?"<<endl;
+                cin>>n;
+                for(int i=0;i<n;i++)
+                {
+                     if(i==0)
+                        rank = "st";
+                    else if(i==1)
+                        rank = "nd";
+                    else if(i==2)
+                        rank = "rd";
+                    else
+                    rank = "th";
+                    cout<<"Enter the "<<i+1<<rank<<" element to append"<<endl;
+                    cin>>data;
+                    insertionAtEnd(data);
+                }
+                print();
+                break;
+            case 3:
+                cout<<"Enter the position at which you want to insert"<<endl;
+                cin>>position;
+                cout<<"Enter the data to be inserted"<<endl;
+                cin>>data;
+                insertionAtNthPosition(data,position);
+                print();
+                break;
+            case 4:
+                print();
+                break;
+            default:
+                break;
         }
-        print();
-        break;
-        case 2:
-        cout<<"How many elements do you want to enter?"<<endl;
-        cin>>n;
-        for(int i=0;i<n;i++)
-        {
-            cin>>data;
-            insertionAtEnd(data);
-        }
-        print();
-        default:
-            break;
-    }
+        cout<<"continue program?(y/n)"<<endl;
+        cin>>flag;
+    }while(flag=='Y' || flag=='y');
+    cout<<"THANK YOU!"<<endl;
     
     return 0;
 }
